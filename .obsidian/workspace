@@ -1,0 +1,137 @@
+{
+  "main": {
+    "id": "f8cc25560158d19e",
+    "type": "split",
+    "children": [
+      {
+        "id": "4c22e3be2fc8ec41",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Wikis/Hammerspoon.md",
+            "mode": "preview",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "40c02be3651d30a7",
+    "type": "split",
+    "children": [
+      {
+        "id": "0d4493c30c5503eb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c87f3ff511b57438",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "efda3ec122f8e301",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "00db4961ab0936aa",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 171
+  },
+  "right": {
+    "id": "0eb6a5f5bf8258d0",
+    "type": "split",
+    "children": [
+      {
+        "id": "139e87a0d01a22af",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f77dde1f0a54444e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Wikis/Hammerspoon.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "7aa28aae3c0d288c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Wikis/Hammerspoon.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "b6a17ff9e795c9f6",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "330469eabbd66730",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Wikis/Hammerspoon.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "4c22e3be2fc8ec41",
+  "lastOpenFiles": [
+    "Wikis/Hammerspoon.md",
+    "Wikis/GitHub.md",
+    "README.md"
+  ]
+}
