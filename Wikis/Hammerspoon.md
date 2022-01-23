@@ -202,3 +202,4 @@ https://github.com/Hammerspoon/hammerspoon/wiki/Sample-Configurations
 ---
 ## 我的配置
 
+https://github.com/DZL1943/geeknotes/blob/main/Dotfiles/init.lua
