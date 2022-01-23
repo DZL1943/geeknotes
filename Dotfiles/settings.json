@@ -1,0 +1,68 @@
+{
+    "window.autoDetectColorScheme": true,
+    "workbench.preferredLightColorTheme":"Dracula Soft",
+    "workbench.preferredDarkColorTheme": "One Monokai",
+    "editor.fontSize": 15,
+    "editor.minimap.enabled": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "window.restoreWindows": "one",
+    "files.hotExit": "onExitAndWindowClose",
+    "security.workspace.trust.untrustedFiles": "open",
+    "workbench.editor.untitled.hint": "hidden",
+    "editor.copyWithSyntaxHighlighting": false,
+    "terminal.integrated.copyOnSelection": true,
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "python.showStartPage": false,
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "files.defaultLanguage": "markdown",
+    "editor.renderControlCharacters": true,
+    "editor.renderWhitespace": "all",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "java.home": "/Users/mac/Library/Java/JavaVirtualMachines/azul-16.0.2/Contents/Home",
+    "files.watcherExclude": {
+        "**/.bloop": true,
+        "**/.metals": true,
+        "**/.ammonite": true
+    },
+    "code-runner.runInTerminal": true,
+    "[lisp]": {
+        "editor.tabSize": 2
+    },
+    "[markdown]": {
+        "editor.unicodeHighlight.ambiguousCharacters": false,
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": false,
+        "editor.tabSize": 2
+    },
+    "vscode-office.autoTheme": true,
+    "winopacity.opacity": 80,
+    "tabnine.experimentalAutoImports": true,
+    "editor.linkedEditing": true,
+    "open-in-browser.default": "Chrome",
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "breadcrumbs.enabled": false,
+    "workbench.colorTheme": "One Monokai",
+    "asciidoc.previewFrontMatter": "show",
+    "markdown-preview-enhanced.frontMatterRenderingOption": "code block",
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+
+    // "markdown.marp.themes": [
+    //     "https://example.com/foo/bar/custom-theme.css",
+    //     "./themes/your-theme.css"
+    //   ]
+}
