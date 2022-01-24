@@ -200,6 +200,30 @@ https://github.com/Hammerspoon/hammerspoon/wiki/Sample-Configurations
 - FnMate
 
 ---
-## 我的配置
+### 我的配置
 
 https://github.com/DZL1943/geeknotes/blob/main/Dotfiles/init.lua
+
+---
+## 7 Api 学习
+
+----
+### canvas
+
+type
+- arc
+- canvas
+- circle
+- ellipticalArc
+- image
+- oval
+- points
+- rectangle
+- resetClip
+- segments
+- text
+
+----
+更多属性参考: https://github.com/Hammerspoon/hammerspoon/blob/master/extensions/canvas/canvas.lua#L15
+
+例子: https://github.com/asmagill/hammerspoon/wiki/hs.canvas.examples

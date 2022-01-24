@@ -77,6 +77,7 @@ obj.cfg = {
 obj.key_map = {
     supervisor = {{'cmd', 'shift', 'ctrl'}, 'q'},
     reloadConfiguration = {{'cmd', 'shift'}, 'r'},
+    help = {'alt', 'h'},
     windowHints = {'alt', 'tab'},
     appLauncher = {'alt', 'a'},
     myClock = {'alt', 't'},
@@ -167,6 +168,28 @@ local function setupWindowHints()
     end)
 end
 
+local function toggleHelp()
+    if obj.hcanvas and obj.hcanvas:isShowing() then
+        obj.hcanvas:hide()
+    else
+        local mainRes = hs.screen.primaryScreen():fullFrame()
+        obj.hcanvas = hs.canvas.new({x=(mainRes.w-500)/2, y=(mainRes.h-600)/2, w=600, h=500}):appendElements(
+            {
+                type = 'text',
+                text = hs.inspect(obj.key_map),
+                textSize = 26,
+                textColor = 'white',
+                textAlignment = 'left',
+            }
+        ):show()
+    end
+end
+
+local function setupHelp()
+    local k = 'help'
+    obj.supervisor:bind(obj.key_map[k][1], obj.key_map[k][2], 'toggle help', toggleHelp)
+end
+
 local function toggleClock(bool)
     -- if running
     if obj.ctimer and not bool then
@@ -175,20 +198,15 @@ local function toggleClock(bool)
         obj.ccanvas:hide()
     else
         local mainRes = hs.screen.primaryScreen():fullFrame()
-        obj.ccanvas = hs.canvas.new({x=0, y=0, w=0, h=0}):show()
-        obj.ccanvas[1] = {
-            type = 'text',
-            text = os.date('%H:%M'),
-            textSize = 40,
-            textColor = {hex='#1891C3'},
-            textAlignment = 'left',
-        }
-        obj.ccanvas:frame({
-            x = 10,
-            y = mainRes.h - 60,
-            w = 300,
-            h = 60
-        })
+        obj.ccanvas = hs.canvas.new({x=10, y=mainRes.h - 60, w=300, h=60}):appendElements(
+            {
+                type = 'text',
+                text = os.date('%H:%M'),
+                textSize = 40,
+                textColor = {hex='#1891C3'},
+                textAlignment = 'left',
+            }
+        ):show()
         obj.ccanvas:bringToFront(true)
         obj.ccanvas:behavior(hs.canvas.windowBehaviors.canJoinAllSpaces)
         obj.ctimer = hs.timer.doEvery(20, function() obj.ccanvas[1].text = os.date('%H:%M') end)
@@ -294,6 +312,7 @@ function obj:init()
 end
 
 function obj:start()
+    setupHelp()
     -- reload config
     setupReloadConfig()
     -- app launcher mode

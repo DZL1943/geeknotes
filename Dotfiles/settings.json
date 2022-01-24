@@ -1,8 +1,8 @@
 {
     "window.autoDetectColorScheme": true,
     "workbench.preferredLightColorTheme":"Dracula Soft",
-    "workbench.preferredDarkColorTheme": "One Monokai",
-    "editor.fontSize": 15,
+    "workbench.preferredDarkColorTheme": "Dracula Soft",
+    "editor.fontSize": 16,
     "editor.minimap.enabled": false,
     "workbench.startupEditor": "newUntitledFile",
     "window.restoreWindows": "one",
@@ -44,7 +44,8 @@
         "editor.unicodeHighlight.ambiguousCharacters": false,
         "editor.wordWrap": "on",
         "editor.quickSuggestions": false,
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "yzhang.markdown-all-in-one"
     },
     "vscode-office.autoTheme": true,
     "winopacity.opacity": 80,
@@ -55,11 +56,13 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "breadcrumbs.enabled": false,
-    "workbench.colorTheme": "One Monokai",
+    "workbench.colorTheme": "Dracula Soft",
     "asciidoc.previewFrontMatter": "show",
     "markdown-preview-enhanced.frontMatterRenderingOption": "code block",
     "git.enableSmartCommit": true,
     "git.confirmSync": false,
+    "explorer.confirmDelete": false,
+    "vim.whichwrap": "b,s,h,l,<,>,[,]",
 
     // "markdown.marp.themes": [
     //     "https://example.com/foo/bar/custom-theme.css",

@@ -26,6 +26,7 @@
   - Markdown Notes
   - Markdown Preview Mermaid Support
   - Mermaid Markdown Syntax Highlight
+  - Markdown Shortcuts
   - Markdown Table Prettifier
 - AsciiDoc
 - CSV
