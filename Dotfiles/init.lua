@@ -1,7 +1,7 @@
 --[==[
 my hs init config
 refer to awesome-hammerspoon
-updated: 20220123
+updated: 20220125
 --]==]
 
 local obj = {}
@@ -263,9 +263,9 @@ local function toggleNoFnMate(bool)
         elseif event:getCharacters() == "o" then
             return true, {hs.eventtap.event.newScrollEvent({-3, 0}, {}, "line")}
         elseif event:getCharacters() == "u" then
-            return true, {hs.eventtap.event.newScrollEvent({0, -3}, {}, "line")}
+            return true, {hs.eventtap.event.newScrollEvent({0, -10}, {}, "line")}
         elseif event:getCharacters() == "i" then
-            return true, {hs.eventtap.event.newScrollEvent({0, 3}, {}, "line")}
+            return true, {hs.eventtap.event.newScrollEvent({0, 10}, {}, "line")}
         elseif event:getCharacters() == "," then
             local currentpos = hs.mouse.getAbsolutePosition()
             return true, {hs.eventtap.leftClick(currentpos)}
