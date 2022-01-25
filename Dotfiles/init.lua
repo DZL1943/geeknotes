@@ -64,6 +64,7 @@ obj.cfg = {
         x = 'XMind',
     },
     spoons = {
+        'SPoonInstall',
         'KSheet',
         -- 'Calendar',
         -- 'HCalendar',
@@ -78,6 +79,7 @@ obj.key_map = {
     supervisor = {{'cmd', 'shift', 'ctrl'}, 'q'},
     reloadConfiguration = {{'cmd', 'shift'}, 'r'},
     help = {'alt', 'h'},
+    noFnMate = {'alt', 'v'},
     windowHints = {'alt', 'tab'},
     appLauncher = {'alt', 'a'},
     myClock = {'alt', 't'},
@@ -124,6 +126,7 @@ function obj:activateModal(id, trayColor, showKeys)
             w = 20,
             h = 20
         })
+        if type(trayColor) ~= 'string' then trayColor = obj.trayColor end 
         obj.modal_tray[1].fillColor = {hex = trayColor, alpha = 0.7}
         obj.modal_tray:show()
     end
@@ -149,7 +152,10 @@ local function setupReloadConfig()
     end)
     obj.activated_keys[k] = obj.key_map[k]
     if obj.autoReloadConfig then
-        obj.cfg_watcher = hs.pathwatcher.new(hs.configdir, hs.reload):start()
+        obj.cfg_watcher = hs.pathwatcher.new(hs.configdir, function()
+            hs.notify.new({title="Hammerspoon", informativeText="Config reloaded."}):send()
+            hs.reload() 
+        end):start()
     end
 end
 
@@ -180,7 +186,7 @@ local function toggleHelp()
         obj.hcanvas:hide()
     else
         local mainRes = hs.screen.primaryScreen():fullFrame()
-        obj.hcanvas = hs.canvas.new({x=(mainRes.w-600)/2, y=(mainRes.h-500)/2, w=600, h=500}):appendElements(
+        obj.hcanvas = obj.hcanvas or hs.canvas.new({x=(mainRes.w-600)/2, y=(mainRes.h-500)/2, w=600, h=500}):appendElements(
             {
                 type = "rectangle",
                 action = "fill",
@@ -194,7 +200,8 @@ local function toggleHelp()
                 textColor = {hex = "#2390FF", alpha = 1},
                 textAlignment = 'left',
             }
-        ):show()
+        )
+        obj.hcanvas:show()
     end
 end
 
@@ -206,13 +213,15 @@ end
 
 local function toggleClock(bool)
     -- if running
-    if obj.ctimer and not bool then
-        obj.ctimer:stop()
-        obj.ctimer = nil
-        obj.ccanvas:hide()
-    else
+    if obj.ctimer and obj.ctimer:running() then
+        if not bool then
+            obj.ctimer:stop()
+            obj.ctimer = nil
+            obj.ccanvas:hide()
+        end
+    elseif bool ~= false then
         local mainRes = hs.screen.primaryScreen():fullFrame()
-        obj.ccanvas = hs.canvas.new({x=10, y=mainRes.h - 60, w=300, h=60}):appendElements(
+        obj.ccanvas = obj.ccanvas or hs.canvas.new({x=10, y=mainRes.h - 60, w=300, h=60}):appendElements(
             {
                 type = 'text',
                 text = os.date('%H:%M'),
@@ -220,9 +229,10 @@ local function toggleClock(bool)
                 textColor = {hex='#1891C3'},
                 textAlignment = 'left',
             }
-        ):show()
+        )
         obj.ccanvas:bringToFront(true)
         obj.ccanvas:behavior(hs.canvas.windowBehaviors.canJoinAllSpaces)
+        obj.ccanvas:show()
         obj.ctimer = hs.timer.doEvery(20, function() obj.ccanvas[1].text = os.date('%H:%M') end)
     end
 end
@@ -236,6 +246,62 @@ local function setupClock()
         obj.activated_keys[k] = obj.key_map[k]
         toggleClock()
     end
+end
+
+local function toggleNoFnMate(bool)
+    local function catcher(event)
+        if event:getCharacters() == "h" then
+            return true, {hs.eventtap.event.newKeyEvent({}, "left", true)}
+        elseif event:getCharacters() == "l" then
+            return true, {hs.eventtap.event.newKeyEvent({}, "right", true)}
+        elseif event:getCharacters() == "j" then
+            return true, {hs.eventtap.event.newKeyEvent({}, "down", true)}
+        elseif event:getCharacters() == "k" then
+            return true, {hs.eventtap.event.newKeyEvent({}, "up", true)}
+        elseif event:getCharacters() == "y" then
+            return true, {hs.eventtap.event.newScrollEvent({3, 0}, {}, "line")}
+        elseif event:getCharacters() == "o" then
+            return true, {hs.eventtap.event.newScrollEvent({-3, 0}, {}, "line")}
+        elseif event:getCharacters() == "u" then
+            return true, {hs.eventtap.event.newScrollEvent({0, -3}, {}, "line")}
+        elseif event:getCharacters() == "i" then
+            return true, {hs.eventtap.event.newScrollEvent({0, 3}, {}, "line")}
+        elseif event:getCharacters() == "," then
+            local currentpos = hs.mouse.getAbsolutePosition()
+            return true, {hs.eventtap.leftClick(currentpos)}
+        elseif event:getCharacters() == "." then
+            local currentpos = hs.mouse.getAbsolutePosition()
+            return true, {hs.eventtap.rightClick(currentpos)}
+        end
+    end
+
+    if obj.nofn_tapper and obj.nofn_tapper:isEnabled() then
+        if not bool then
+            obj.nofn_tapper:stop()
+        end
+    elseif bool ~= false then
+        obj.nofn_tapper = obj.nofn_tapper or hs.eventtap.new({hs.eventtap.event.types.keyDown}, catcher)
+        obj.nofn_tapper:start()
+    end
+end
+
+local function setupNoFnMate()
+    local k = 'noFnMate'
+    local cmodal = obj:newModal(k, obj.key_map[k])
+    cmodal:bind('', 'escape', 'Deactivate noFnMate mode', function()
+        toggleNoFnMate(false)
+        obj:deactivateModal(k)
+    end)
+    cmodal:bind('', 'q', 'Deactivate noFnMate mode', function()
+        toggleNoFnMate(false)
+        obj:deactivateModal(k)
+    end)
+    obj.supervisor:bind(obj.key_map[k][1], obj.key_map[k][2], 'Enter noFnMate mode', function()
+        obj:deactivateAllModal()
+        obj:activateModal(k, true)
+        toggleNoFnMate(true)
+    end)
+    obj.activated_keys[k] = obj.key_map[k]
 end
 
 local function setupKSheet()
@@ -344,6 +410,8 @@ function obj:start()
     setupWindowHints()
     -- clock
     setupClock()
+    --
+    setupNoFnMate()
     -- KSheet mode
     if spoon.KSheet then setupKSheet() end
     -- WinWin
