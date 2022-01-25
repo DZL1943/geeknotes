@@ -63,6 +63,9 @@
     "git.confirmSync": false,
     "explorer.confirmDelete": false,
     "vim.whichwrap": "b,s,h,l,<,>,[,]",
+    "git.autofetch": true,
+    "vim.hlsearch": true,
+    "vim.overrideCopy": false,
 
     // "markdown.marp.themes": [
     //     "https://example.com/foo/bar/custom-theme.css",
