@@ -87,6 +87,8 @@ obj.key_map = {
     ClipboardTool = {'alt', 'p'},
 }
 
+obj.activated_keys = {}
+
 ---- supervisor
 function obj:newModal(id, keys)
     local cmodal = hs.hotkey.modal.new()
@@ -145,6 +147,7 @@ local function setupReloadConfig()
     hs.hotkey.bind(obj.key_map[k][1], obj.key_map[k][2], 'Reload Configuration', function() 
         hs.reload() 
     end)
+    obj.activated_keys[k] = obj.key_map[k]
     if obj.autoReloadConfig then
         obj.cfg_watcher = hs.pathwatcher.new(hs.configdir, hs.reload):start()
     end
@@ -153,6 +156,7 @@ end
 local function setupAppLauncher()
     local k = 'appLauncher'
     local cmodal = obj:newModal(k, obj.key_map[k])
+    obj.activated_keys[k] = obj.key_map[k]
     for key, app in pairs(obj.app_map) do
         cmodal:bind('', key, function()
             hs.application.launchOrFocus(app)
@@ -161,11 +165,14 @@ local function setupAppLauncher()
 end
 
 local function setupWindowHints()
-    local k = 'windowHints'
-    obj.supervisor:bind(obj.key_map[k][1], obj.key_map[k][2], 'Show Window Hints', function()
-        obj:deactivateAllModal()
-        hs.hints.windowHints()
-    end)
+    if obj.enable_whints then
+        local k = 'windowHints'
+        obj.supervisor:bind(obj.key_map[k][1], obj.key_map[k][2], 'Show Window Hints', function()
+            obj:deactivateAllModal()
+            hs.hints.windowHints()
+        end)
+        obj.activated_keys[k] = obj.key_map[k]
+    end
 end
 
 local function toggleHelp()
@@ -173,12 +180,18 @@ local function toggleHelp()
         obj.hcanvas:hide()
     else
         local mainRes = hs.screen.primaryScreen():fullFrame()
-        obj.hcanvas = hs.canvas.new({x=(mainRes.w-500)/2, y=(mainRes.h-600)/2, w=600, h=500}):appendElements(
+        obj.hcanvas = hs.canvas.new({x=(mainRes.w-600)/2, y=(mainRes.h-500)/2, w=600, h=500}):appendElements(
+            {
+                type = "rectangle",
+                action = "fill",
+                fillColor = {hex = "#EEEEEE", alpha = 0.95},
+                roundedRectRadii = {xRadius = 10, yRadius = 10},
+            },
             {
                 type = 'text',
-                text = hs.inspect(obj.key_map),
+                text = hs.inspect(obj.activated_keys) .. '\n\n 😄',
                 textSize = 26,
-                textColor = 'white',
+                textColor = {hex = "#2390FF", alpha = 1},
                 textAlignment = 'left',
             }
         ):show()
@@ -188,6 +201,7 @@ end
 local function setupHelp()
     local k = 'help'
     obj.supervisor:bind(obj.key_map[k][1], obj.key_map[k][2], 'toggle help', toggleHelp)
+    obj.activated_keys[k] = obj.key_map[k]
 end
 
 local function toggleClock(bool)
@@ -214,10 +228,14 @@ local function toggleClock(bool)
 end
 
 local function setupClock()
-    local k = 'myClock'
-    obj.supervisor:bind(obj.key_map[k][1], obj.key_map[k][2], 'Toggle Clock', function() 
-        toggleClock() 
-    end)
+    if obj.enable_clock then
+        local k = 'myClock'
+        obj.supervisor:bind(obj.key_map[k][1], obj.key_map[k][2], 'Toggle Clock', function() 
+            toggleClock() 
+        end)
+        obj.activated_keys[k] = obj.key_map[k]
+        toggleClock()
+    end
 end
 
 local function setupKSheet()
@@ -236,6 +254,7 @@ local function setupKSheet()
         obj:deactivateAllModal()
         obj:activateModal(k)
     end)
+    obj.activated_keys[k] = obj.key_map[k]
 end
 
 local function setupWinWin()
@@ -271,11 +290,15 @@ local function setupWinWin()
     cmodal:bind('', 'u', 'Undo Window Manipulation', function() spoon.WinWin:undo() end)
     cmodal:bind('shift', 'u', 'Redo Window Manipulation', function() spoon.WinWin:redo() end)
     cmodal:bind('', '`', 'Center Cursor', function() spoon.WinWin:centerCursor() end)
+
+    obj.activated_keys[k] = obj.key_map[k]
 end
 
 local function setupClipboardTool()
     spoon.ClipboardTool:bindHotkeys({toggle_clipboard = obj.key_map['ClipboardTool']})
     spoon.ClipboardTool:start()
+
+    obj.activated_keys[k] = obj.key_map[k]
 end
 
 function obj:init()
@@ -318,9 +341,9 @@ function obj:start()
     -- app launcher mode
     setupAppLauncher()
     -- windowHints
-    if obj.enable_whints then setupWindowHints() end
+    setupWindowHints()
     -- clock
-    if obj.enable_clock then setupClock() toggleClock() end
+    setupClock()
     -- KSheet mode
     if spoon.KSheet then setupKSheet() end
     -- WinWin
