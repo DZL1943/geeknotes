@@ -1,7 +1,7 @@
 ; -*- coding: utf-8 -*-
 ;;; package --- Summary
 ;;; Commentary:
-;;; updated: 20220113
+;;; updated: 20220125
 ;;; Emacs 27.2 @macbook
 ;;; Code:
 (setq package-archives '(
@@ -193,6 +193,7 @@
                                         ivy counsel swiper
                                         ;; evil evil-collection
                                         right-click-context drag-stuff easy-kill
+                                        imenu-list
                                         smart-mode-line
                                         ;; powerline
                                         ;; sis
@@ -330,6 +331,16 @@
   (set-face-background 'highlight-indentation-current-column-face "#c3b3b3"))
 
 (use-package format-all)
+
+(use-package imenu-list
+  :init
+  (global-set-key (kbd "C-'") #'imenu-list-smart-toggle)
+  (setq imenu-list-position 'right)
+  (setq imenu-list-size 0.2)
+  (setq imenu-list-auto-resize nil)
+  (setq imenu-list-focus-after-activation nil)
+  (setq imenu-list-after-jump-hook nil)
+  (imenu-list-minor-mode))
 
 (use-package right-click-context
   :init

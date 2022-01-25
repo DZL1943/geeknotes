@@ -5,7 +5,7 @@ updated: 20220125
 --]==]
 
 local obj = {}
-obj.__index = obj
+-- obj.__index = obj
 
 obj._metadata = {
     name = 'my hs init config',
@@ -44,6 +44,19 @@ obj.cfg = {
     autoReloadConfig = true,
     enable_clock = true,
     enable_whints = false,
+    key_map = {
+        supervisor = {{'cmd', 'shift', 'ctrl'}, 'q'},
+        reloadConfiguration = {{'cmd', 'shift'}, 'r'},
+        help = {'alt', 'h'},
+        noFnMate = {'alt', 'v'},
+        windowHints = {'alt', 'tab'},
+        appLauncher = {'alt', 'a'},
+        myClock = {'alt', 't'},
+        KSheet = {'alt', 's'},
+        WinWin = {'alt', 'w'},
+        CountDown = {'alt', 'j'},
+        ClipboardTool = {'alt', 'p'},
+    },
     app_map = {
         a = 'App Store',
         c = 'Visual Studio Code',
@@ -73,20 +86,6 @@ obj.cfg = {
         -- 'CountDown',
         -- 'FnMate',
     },
-}
-
-obj.key_map = {
-    supervisor = {{'cmd', 'shift', 'ctrl'}, 'q'},
-    reloadConfiguration = {{'cmd', 'shift'}, 'r'},
-    help = {'alt', 'h'},
-    noFnMate = {'alt', 'v'},
-    windowHints = {'alt', 'tab'},
-    appLauncher = {'alt', 'a'},
-    myClock = {'alt', 't'},
-    KSheet = {'alt', 's'},
-    WinWin = {'alt', 'w'},
-    CountDown = {'alt', 'j'},
-    ClipboardTool = {'alt', 'p'},
 }
 
 obj.activated_keys = {}
@@ -146,16 +145,15 @@ function obj:deactivateAllModal()
 end
 --- functions & setups
 local function setupReloadConfig()
-    local k = 'reloadConfiguration'
-    hs.hotkey.bind(obj.key_map[k][1], obj.key_map[k][2], 'Reload Configuration', function() 
+    local function notifyAndReload()
+        hs.notify.new({title="Hammerspoon", informativeText="Config reloaded."}):send()
         hs.reload() 
-    end)
+    end
+    local k = 'reloadConfiguration'
+    hs.hotkey.bind(obj.key_map[k][1], obj.key_map[k][2], 'Reload Configuration', notifyAndReload)
     obj.activated_keys[k] = obj.key_map[k]
     if obj.autoReloadConfig then
-        obj.cfg_watcher = hs.pathwatcher.new(hs.configdir, function()
-            hs.notify.new({title="Hammerspoon", informativeText="Config reloaded."}):send()
-            hs.reload() 
-        end):start()
+        obj.cfg_watcher = hs.pathwatcher.new(hs.configdir, notifyAndReload):start()
     end
 end
 
@@ -426,6 +424,7 @@ end
 function obj:stop()
     if obj.cfg_watcher then obj.cfg_watcher:stop() end
     if obj.enable_clock then obj:toggleClock(false) end
+    if obj.nofn_tapper then obj.nofn_tapper:stop() end
 
     obj.supervisor:exit()
     return self
