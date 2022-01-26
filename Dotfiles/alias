@@ -1,0 +1,5 @@
+alias ll='ls -l'
+alias cl='clear'
+alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+alias notebook='/opt/miniconda3/envs/jupyter/bin/jupyter-notebook'
+alias ipy='/opt/miniconda3/envs/jupyter/bin/ipython'

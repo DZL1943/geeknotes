@@ -1,0 +1,9 @@
+export JAVA_HOME=/opt/homebrew/opt/openjdk@11
+export SCALA_HOME=~/opt/scala3-3.0.1
+export ANACONDA_HOME=/opt/miniconda3
+export PYTHON_HOME=/Library/Frameworks/Python.framework/Versions/3.9
+export PATH
+export CLICOLOR=1
+export HOMEBREW_BREW_GIT_REMOTE="https://mirrors.ustc.edu.cn/brew.git"
+export HOMEBREW_CORE_GIT_REMOTE="https://mirrors.ustc.edu.cn/homebrew-core.git"
+export HOMEBREW_NO_AUTO_UPDATE=true
