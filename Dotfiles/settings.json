@@ -66,6 +66,8 @@
     "git.autofetch": true,
     "vim.hlsearch": true,
     "vim.overrideCopy": false,
+    "editor.scrollbar.horizontal": "hidden",
+    "editor.lineNumbers": "off",
 
     // "markdown.marp.themes": [
     //     "https://example.com/foo/bar/custom-theme.css",
