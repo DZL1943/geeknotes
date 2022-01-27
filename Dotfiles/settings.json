@@ -53,6 +53,7 @@
     "editor.linkedEditing": true,
     "open-in-browser.default": "Chrome",
     "[html]": {
+        "editor.tabSize": 2,
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "breadcrumbs.enabled": false,
@@ -68,6 +69,7 @@
     "vim.overrideCopy": false,
     "editor.scrollbar.horizontal": "hidden",
     "editor.lineNumbers": "off",
+    "html.hover.references": false,
 
     // "markdown.marp.themes": [
     //     "https://example.com/foo/bar/custom-theme.css",
